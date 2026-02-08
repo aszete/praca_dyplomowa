@@ -1,17 +1,34 @@
--- Simple database creation - SQL Server will use default paths
+/*
+=============================================================
+Create Database and Schemas
+=============================================================
+*/
+
+USE master;
+GO
+-- DROP database
+
+IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DW_Ecom')
+BEGIN
+    ALTER DATABASE DW_Ecom SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE DW_Ecom;
+END;
+GO
+
+--CREATE database
 CREATE DATABASE DW_Ecom;
 GO
 
--- Set the recovery model to SIMPLE
 ALTER DATABASE DW_Ecom SET RECOVERY SIMPLE;
 GO
 
--- Use the new database
 USE DW_Ecom;
 GO
 
-
+--CREATE schemas
 # Why SIMPLE works for data warehouses:
+
+==================================================================================
 
 # Data warehouses are loaded from source systems through ETL/ELT processes
 # If something goes wrong, you can reload data from your source systems
