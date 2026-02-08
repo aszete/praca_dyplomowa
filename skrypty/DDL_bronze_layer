@@ -59,7 +59,9 @@ CREATE TABLE bronze.orders (
     shipping_amount DECIMAL(18,2),
     total_amount DECIMAL(18,2),
     created_at DATETIME2,
-    updated_at DATETIME2
+    updated_at DATETIME2,
+    load_date DATETIME2,
+    batch_id VARCHAR(50)
 );
 
 CREATE TABLE bronze.order_items (
@@ -71,7 +73,9 @@ CREATE TABLE bronze.order_items (
     discount_amount DECIMAL(18,2),
     tax_amount DECIMAL(18,2),
     created_at DATETIME2,
-    updated_at DATETIME2
+    updated_at DATETIME2,
+    load_date DATETIME2,
+    batch_id VARCHAR(50)
 );
 
 CREATE TABLE bronze.order_item_returns (
@@ -82,7 +86,9 @@ CREATE TABLE bronze.order_item_returns (
     refund_amount DECIMAL(18,2),
     reason VARCHAR(255),
     created_at DATETIME2,
-    updated_at DATETIME2
+    updated_at DATETIME2,
+    load_date DATETIME2,
+    batch_id VARCHAR(50)
 );
 
 CREATE TABLE bronze.website_sessions (
@@ -94,12 +100,28 @@ CREATE TABLE bronze.website_sessions (
     utm_campaign VARCHAR(100),
     utm_content VARCHAR(100),
     device_type VARCHAR(50),
-    http_referer VARCHAR(255)
+    http_referer VARCHAR(255),
+    load_date DATETIME2,
+    batch_id VARCHAR(50)
 );
 
 CREATE TABLE bronze.pageviews (
     website_pageview_id INT,
     created_at DATETIME2,
     website_session_id INT,
-    pageview_url VARCHAR(255)
+    pageview_url VARCHAR(255),
+    load_date DATETIME2,
+    batch_id VARCHAR(50)
 );
+
+# Metadata table tracking ETL loads for all tables
+
+CREATE TABLE bronze.metadata (
+    table_name VARCHAR(100),
+    last_load_date DATETIME2,
+    batch_id VARCHAR(50),
+    row_count INT,
+    status VARCHAR(50),
+    comments VARCHAR(255)
+);
+
