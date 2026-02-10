@@ -14,7 +14,7 @@ CREATE TABLE bronze.customers (
     -- ETL audit
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL,
+    batch_id VARCHAR(50) NOT NULL,
     PRIMARY KEY NONCLUSTERED (customer_id)
 );
 
@@ -29,7 +29,7 @@ CREATE TABLE bronze.addresses (
     updated_at DATETIME2 NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL,
+    batch_id VARCHAR(50) NOT NULL,
     PRIMARY KEY NONCLUSTERED (address_id)
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE bronze.brands (
     updated_at DATETIME2 NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL
+    batch_id VARCHAR(50) NOT NULL
 );
 
 -- categories
@@ -53,7 +53,7 @@ CREATE TABLE bronze.categories (
     updated_at DATETIME2 NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL
+    batch_id VARCHAR(50) NOT NULL
 );
 
 -- products
@@ -68,7 +68,7 @@ CREATE TABLE bronze.products (
     updated_at DATETIME2 NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL
+    batch_id VARCHAR(50) NOT NULL
 );
 
 -- payment methods
@@ -80,7 +80,7 @@ CREATE TABLE bronze.payment_methods (
     updated_at DATETIME2 NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL
+    batch_id VARCHAR(50) NOT NULL
 );
 
 -- Orders
@@ -100,7 +100,7 @@ CREATE TABLE bronze.orders (
     updated_at DATETIME2 NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL
+    batch_id VARCHAR(50) NOT NULL
 );
 
 -- Order Items
@@ -116,7 +116,7 @@ CREATE TABLE bronze.order_items (
     updated_at DATETIME2 NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL
+    batch_id VARCHAR(50) NOT NULL
 );
 
 -- Order Item Returns
@@ -131,7 +131,7 @@ CREATE TABLE bronze.order_item_returns (
     updated_at DATETIME2 NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL
+    batch_id VARCHAR(50) NOT NULL
 );
 
 -- Website Sessions
@@ -147,7 +147,7 @@ CREATE TABLE bronze.website_sessions (
     http_referer VARCHAR(255) NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL
+    batch_id VARCHAR(50) NOT NULL
 );
 
 -- Pageviews
@@ -158,7 +158,7 @@ CREATE TABLE bronze.pageviews (
     pageview_url VARCHAR(255) NULL,
     source_system VARCHAR(50) NOT NULL DEFAULT 'OLTP_DB',
     load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NULL
+    batch_id VARCHAR(50) NOT NULL
 );
 
 -- Metadata table tracking ETL loads for all tables
