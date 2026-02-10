@@ -1,8 +1,34 @@
 /*
 ===============================================================================
-Stored Procedure: Load Bronze Layer (Source -> Bronze)
+Stored Procedure: Load Bronze Layer from OLTP Source
+===============================================================================
+Purpose:
+    Loads raw data from OLTP source extracts (CSV files) into the bronze layer
+    using a two-step ingestion process:
+        1. BULK INSERT into staging tables
+        2. INSERT into bronze tables with audit columns populated
+
+    The procedure assigns a consistent batch_id to all loaded rows and records
+    detailed load metadata (row counts, timings, status) for audit and
+    traceability purposes.
+
+    This procedure implements the initial ingestion step of the Medallion
+    Architecture:
+        Source OLTP → Bronze (Raw) → Silver (Cleansed) → Gold (Dimensional)
+
+Parameters:
+    @batch_id VARCHAR(50) - Optional batch identifier.
+                            If not provided, a batch_id is generated automatically.
+
+Usage:
+    -- Load with auto-generated batch_id
+    EXEC bronze.load_bronze;
+
+    -- Load with a specific batch_id
+    EXEC bronze.load_bronze @batch_id = 'BATCH_2024_001';
 ===============================================================================
 */
+
 
 TRUNATE TABLE bronze.payment_methods;
 
