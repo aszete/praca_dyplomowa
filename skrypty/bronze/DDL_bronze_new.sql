@@ -29,16 +29,15 @@ IF OBJECT_ID('bronze.addresses', 'U') IS NOT NULL
 GO
 
 CREATE TABLE bronze.addresses (
-    address_id INT NOT NULL,
+    address_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
     country VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
     street VARCHAR(255) NOT NULL,
     postal_code VARCHAR(20) NOT NULL,
     created_at DATETIME2 NULL,
     updated_at DATETIME2 NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL,
-    PRIMARY KEY NONCLUSTERED (address_id)
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- brands
@@ -52,8 +51,8 @@ CREATE TABLE bronze.brands (
     name VARCHAR(255) NOT NULL,
     created_at DATETIME2 NULL,
     updated_at DATETIME2 NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- categories
@@ -68,8 +67,8 @@ CREATE TABLE bronze.categories (
     parent_category_id INT NULL,
     created_at DATETIME2 NULL,
     updated_at DATETIME2 NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- products
@@ -87,8 +86,8 @@ CREATE TABLE bronze.products (
     list_price DECIMAL(18,2) NULL,
     created_at DATETIME2 NULL,
     updated_at DATETIME2 NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- payment methods
@@ -103,8 +102,8 @@ CREATE TABLE bronze.payment_methods (
     is_active BIT NOT NULL DEFAULT 1,
     created_at DATETIME2 NULL,
     updated_at DATETIME2 NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- Orders
@@ -127,8 +126,8 @@ CREATE TABLE bronze.orders (
     total_amount DECIMAL(18,2) NOT NULL,
     created_at DATETIME2 NULL,
     updated_at DATETIME2 NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- Order Items
@@ -147,8 +146,8 @@ CREATE TABLE bronze.order_items (
     tax_amount DECIMAL(18,2) NULL DEFAULT 0,
     created_at DATETIME2 NULL,
     updated_at DATETIME2 NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- Order Item Returns
@@ -166,8 +165,8 @@ CREATE TABLE bronze.order_item_returns (
     reason VARCHAR(255) NULL,
     created_at DATETIME2 NULL,
     updated_at DATETIME2 NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- Website Sessions
@@ -186,8 +185,8 @@ CREATE TABLE bronze.website_sessions (
     utm_content VARCHAR(100) NULL,
     device_type VARCHAR(50) NULL,
     http_referer VARCHAR(255) NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- Pageviews
@@ -201,8 +200,8 @@ CREATE TABLE bronze.pageviews (
     created_at DATETIME2 NOT NULL,
     website_session_id INT NOT NULL,
     pageview_url VARCHAR(255) NULL,
-    load_date DATETIME2 NOT NULL DEFAULT GETDATE(),
-    batch_id VARCHAR(50) NOT NULL
+    load_date DATETIME2 NULL,
+    batch_id VARCHAR(50) NULL
 );
 
 -- Metadata table tracking ETL loads for all tables
