@@ -202,7 +202,7 @@ GO
 CREATE TABLE silver.website_sessions (
     website_session_skey INT IDENTITY(1,1) PRIMARY KEY,
     website_session_id INT NOT NULL,
-    created_at DATETIME2,
+    session_start DATETIME2,
     user_id INT,
     is_repeat_session BIT,
     utm_source NVARCHAR(255),
@@ -224,7 +224,7 @@ GO
 CREATE TABLE silver.pageviews (
     pageview_skey INT IDENTITY(1,1) PRIMARY KEY,
     website_pageview_id INT NOT NULL,
-    created_at DATETIME2,
+    pageview_time DATETIME2,
     website_session_id INT,
     pageview_url NVARCHAR(255),
     source_created_at DATETIME2, 
