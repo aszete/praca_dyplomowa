@@ -5,7 +5,7 @@ IF OBJECT_ID('bronze.customers', 'U') IS NOT NULL
 GO
     
 CREATE TABLE bronze.customers (
-    customer_id INT NOT NULL,
+    customer_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL,
