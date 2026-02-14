@@ -1,17 +1,22 @@
--- Gold metadata
-CREATE TABLE gold.metadata (
-    metadata_id INT IDENTITY(1,1) PRIMARY KEY,
-    table_name VARCHAR(100) NOT NULL,
-    table_type VARCHAR(50) NULL, -- 'fact', 'dimension', 'aggregate'
-    load_start_time DATETIME2 NULL,
-    load_end_time DATETIME2 NULL,
-    batch_id VARCHAR(50) NOT NULL,
-    rows_processed INT NULL,
-    status VARCHAR(50) NOT NULL,
-    error_message VARCHAR(MAX) NULL,
-    created_at DATETIME2 NOT NULL DEFAULT GETDATE()
-);
+-- gold metadata
+IF OBJECT_ID('gold.metadata') IS NULL
+BEGIN
+    CREATE TABLE gold.metadata (
+        log_id INT IDENTITY(1,1) PRIMARY KEY NONCLUSTERED, -- PK is usually non-clustered in logs
+        table_name VARCHAR(100),
+        load_start_time DATETIME2,
+        load_end_time DATETIME2,
+        duration_seconds AS DATEDIFF(SECOND, load_start_time, load_end_time),
+        rows_inserted INT,
+        status VARCHAR(20),
+        error_message NVARCHAR(MAX)
+    );
 
--- YES - Add indexes
-CREATE INDEX IX_gold_metadata_table_status 
-ON gold.metadata(table_name, status, load_start_time DESC);
+    -- Clustered Index on time for optimal sequential writes and chronological reads
+    CREATE CLUSTERED INDEX IX_gold_metadata_load_start_time 
+    ON gold.metadata (load_start_time DESC);
+
+    -- Non-Clustered Index for filtering by specific tables (e.g., checking dim_products history)
+    CREATE INDEX IX_gold_metadata_table_name 
+    ON gold.metadata (table_name);
+END;
