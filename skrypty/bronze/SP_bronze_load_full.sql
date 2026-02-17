@@ -1,35 +1,29 @@
 /*
 ===============================================================================
-Stored Procedure: Load Bronze Layer from OLTP Source
+Procedura składowana (stored procedure): Ładowanie warstwy Bronze
 ===============================================================================
-Purpose:
-    Automates the ingestion of raw data from OLTP source extracts (CSV files) 
-    into the Bronze layer. 
+Cel:
+Procedura automatyzuje ładowanie surowych danych z plików źródłowych OLTP 
+(pliki CSV) do warstwy Bronze. Dodatkowo rejestruje metryki łądowania w
+tabeli metadata.
 
-    Key Features:
-        1. Dynamic Orchestration: Iterates through a defined list of tables 
-           to minimize code duplication.
-        2. Clean Ingestion: Truncates existing data before using BULK INSERT 
-           for high-performance loading.
-        3. Automated Auditing: Populates batch_id and load_date for every row
-           and records execution metrics (start/end times, row counts, errors)
-           into the bronze.metadata table.
+Procedura implementuje początkowy etap pobierania Medallion Architektura:
+Źródło OLTP → Bronze (surowy) → Silver (oczyszczony) → Gold (wymiarowy)
 
-    This procedure implements the initial ingestion step of the Medallion 
-    Architecture:
-        Source OLTP → Bronze (Raw) → Silver (Cleansed) → Gold (Dimensional)
+Parametry:
+@batch_id VARCHAR(50) — opcjonalny identyfikator partii.
+                        Jeśli wartość jest równa NULL, generowany jest
+                        unikalny identyfikator na podstawie bieżącego
+                        znacznika czasu systemu.
 
-Parameters:
-    @batch_id VARCHAR(50) - Optional batch identifier.
-                            If NULL, a unique ID is generated based on 
-                            the current system timestamp.
+Sposób użycia:
+-- Ładowanie wszystkich tabel z automatycznie wygenerowanym identyfikatorem:
 
-Usage:
-    -- Load all tables with auto-generated batch_id
-    EXEC bronze.load_bronze;
+EXEC bronze.load_bronze;
 
-    -- Load all tables with a specific batch_id
-    EXEC bronze.load_bronze @batch_id = 'BATCH_2024_001';
+-- Ładowanie wybranych tabele z określonym identyfikatorem:
+
+EXEC bronze.load_bronze @batch_id = 'BATCH_2024_001';
 ===============================================================================
 */
 
