@@ -1,6 +1,6 @@
 /*
 =============================================================
-Create Database and Schemas
+Stworzenie wydzielonej bazy danych i schematów
 =============================================================
 */
 
@@ -10,10 +10,10 @@ GO
 
 IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DW_Ecom')
 BEGIN
-    ALTER DATABASE DW_Ecom SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
     DROP DATABASE DW_Ecom;
 END;
 GO
+
 
 --CREATE database
 CREATE DATABASE DW_Ecom;
@@ -26,8 +26,16 @@ USE DW_Ecom;
 GO
 
 --CREATE schemas
-# Why SIMPLE works for data warehouses:
 
+CREATE SCHEMA bronze;
+GO
+CREATE SCHEMA silver;
+GO
+CREATE SCHEMA gold;
+GO
+
+==================================================================================
+# Why SIMPLE works for data warehouses:
 ==================================================================================
 
 # Data warehouses are loaded from source systems through ETL/ELT processes
