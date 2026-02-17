@@ -19,9 +19,9 @@ Praca_dyplomoes/
     |
     └── Bronze
     └── Silver
-        └── procedury częsciowe
+        └── procedury czesciowe
     └── Gold
-        └── procedury częsciowe
+        └── procedury czesciowe
         └── widoki
 
 ```
