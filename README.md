@@ -9,7 +9,7 @@ Repozytorium pracy dyplomowej na kierunku **Big Data. Data Engineering**
 
 ## 📂 Struktura repozytorium
 ```
-praca_dyplomoes/
+Praca_dyplomoes/
 │
 ├── Dane/                               # Pliki .csv z surowymi danymi syntetycznymi użytymi w pracy
 │
