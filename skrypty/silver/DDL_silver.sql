@@ -23,7 +23,6 @@ CREATE TABLE silver.addresses (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
-CREATE UNIQUE NONCLUSTERED INDEX IX_silver_addresses_id ON silver.addresses (address_id);
 GO
 
 -- Silver Customers (SCD Type 2)
@@ -47,11 +46,6 @@ CREATE TABLE silver.customers (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
--- Filtered Index: Speeds up finding the active record for updates
-CREATE NONCLUSTERED INDEX IX_silver_customers_id_active 
-ON silver.customers (customer_id) 
-WHERE is_current = 1;
-GO
 
 -- Silver Brands (SCD Type 1)
 IF OBJECT_ID('silver.brands', 'U') IS NOT NULL DROP TABLE silver.brands;
@@ -65,7 +59,6 @@ CREATE TABLE silver.brands (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
-CREATE UNIQUE NONCLUSTERED INDEX IX_silver_brands_id ON silver.brands (brand_id);
 GO
 
 -- Silver Categories (SCD Type 1)
@@ -81,7 +74,6 @@ CREATE TABLE silver.categories (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
-CREATE UNIQUE NONCLUSTERED INDEX IX_silver_categories_id ON silver.categories (category_id);
 GO
 
 -- Silver Payment Methods (SCD Type 1)
@@ -97,7 +89,6 @@ CREATE TABLE silver.payment_methods (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
-CREATE UNIQUE NONCLUSTERED INDEX IX_silver_payment_methods_id ON silver.payment_methods (payment_method_id);
 GO
 
 -- Silver Products (SCD Type 2)
@@ -119,11 +110,6 @@ CREATE TABLE silver.products (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
--- Filtered Index for SCD Logic
-CREATE NONCLUSTERED INDEX IX_silver_products_id_active 
-ON silver.products (product_id) 
-INCLUDE (list_price)
-WHERE is_current = 1;
 GO
 
 -- ==========================================================
@@ -151,8 +137,6 @@ CREATE TABLE silver.orders (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
-CREATE INDEX IX_silver_orders_customer_id ON silver.orders (customer_id);
-CREATE INDEX IX_silver_orders_order_date ON silver.orders (order_date);
 GO
 
 -- Silver Order Items
@@ -173,8 +157,6 @@ CREATE TABLE silver.order_items (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
-CREATE INDEX IX_silver_order_items_order_id ON silver.order_items (order_id);
-CREATE INDEX IX_silver_order_items_product_id ON silver.order_items (product_id);
 GO
 
 -- Silver Order Item Returns
@@ -193,7 +175,6 @@ CREATE TABLE silver.order_item_returns (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
-CREATE INDEX IX_silver_returns_order_item_id ON silver.order_item_returns (order_item_id);
 GO
 
 -- Silver Website Sessions
@@ -215,7 +196,6 @@ CREATE TABLE silver.website_sessions (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
-CREATE INDEX IX_silver_sessions_user_id ON silver.website_sessions (user_id);
 GO
 
 -- Silver Pageviews
@@ -232,7 +212,6 @@ CREATE TABLE silver.pageviews (
     dwh_load_date DATETIME2 DEFAULT SYSDATETIME(),
     dwh_batch_id VARCHAR(50)
 );
-CREATE INDEX IX_silver_pageviews_session_id ON silver.pageviews (website_session_id);
 GO
 
 -- Silver metadata
@@ -254,6 +233,4 @@ CREATE TABLE silver.metadata (
     error_message VARCHAR(MAX) NULL,
     created_at DATETIME2 NOT NULL DEFAULT GETDATE()
 );
-CREATE INDEX IX_silver_metadata_table_status 
-ON silver.metadata(table_name, status, load_start_time DESC);
 GO
