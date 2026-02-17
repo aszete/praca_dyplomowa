@@ -1,15 +1,15 @@
 # praca_dyplomowa
-Repo pracy dyplomowej
+Repozytorium pracy dyplomowej
 
 
 ## 📂 Struktura repozytorium
 ```
-sql-ultimate-course/
+praca_dyplomoes/
 │
-├── datasets/                           # Raw datasets used for the course (ERP and CRM data)
+├── Dane/                               # Pliki .csv z surowymi danymi syntetycznymi użytymi w pracy
 │
-├── docs/                               # course documentation and architecture details
+├── Docs/                               # Dodatkowe dokumenty, diagramy użyte w pracy
 │
-└── scripts/                            # All codes presented in the course
+└── Skrypty/                            # Wszystkie skrypty T-SQL użyte w implementacji hurtowni danych
 ```
 
