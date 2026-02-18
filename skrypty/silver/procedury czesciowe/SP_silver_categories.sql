@@ -1,11 +1,11 @@
-CREATE OR ALTER PROCEDURE silver.load_brands
+CREATE OR ALTER PROCEDURE silver.load_categories
     @silver_batch_id VARCHAR(50),
     @source_batch_id VARCHAR(50)
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @table_name VARCHAR(100) = 'brands';
+    DECLARE @table_name VARCHAR(100) = 'categories';
     DECLARE @scd_type VARCHAR(20) = 'Type 1';
     DECLARE @start_time DATETIME2 = SYSDATETIME();
     DECLARE @rows_affected INT = 0;
@@ -14,26 +14,27 @@ BEGIN
         PRINT '>> Loading: silver.' + @table_name;
 
         -- 1. Transformation Logic (CTE)
-        WITH CleanedBrands AS (
-			SELECT brand_id, ISNULL(TRIM(name), 'N/A') AS brand_name, created_at, updated_at
-            FROM bronze.brands
+        WITH CleanedCategories AS (
+            SELECT category_id, ISNULL(TRIM(name), 'N/A') AS category_name, parent_category_id, created_at, updated_at
+            FROM bronze.categories
         )
         -- 2. Upsert Logic
-        MERGE silver.brands AS target
-        USING CleanedBrands AS source
-        ON target.brand_id = source.brand_id
+        MERGE silver.categories AS target
+        USING CleanedCategories AS source
+        ON target.category_id = source.category_id
         WHEN MATCHED AND (
-            ISNULL(target.brand_name, '') <> ISNULL(source.brand_name, '')
+            ISNULL(target.category_name, '') <> ISNULL(source.category_name, '')
         ) THEN
             UPDATE SET
-                brand_name = source.brand_name,
+                category_name = source.category_name,
+				parent_category_id = source.parent_category_id,
                 source_created_at = source.created_at,
                 source_updated_at = source.updated_at,
                 dwh_load_date = SYSDATETIME(),
                 dwh_batch_id = @silver_batch_id
         WHEN NOT MATCHED BY TARGET THEN
-            INSERT (brand_id, brand_name, source_created_at, source_updated_at, dwh_load_date, dwh_batch_id)
-            VALUES (source.brand_id, source.brand_name, source.created_at, source.updated_at, SYSDATETIME(), @silver_batch_id);
+            INSERT (category_id, category_name, parent_category_id, source_created_at, source_updated_at, dwh_load_date, dwh_batch_id)
+            VALUES (source.category_id, source.category_name, source.parent_category_id, source.created_at, source.updated_at, SYSDATETIME(), @silver_batch_id);
 
         SET @rows_affected = @@ROWCOUNT;
 
