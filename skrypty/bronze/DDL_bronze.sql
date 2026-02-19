@@ -5,7 +5,7 @@ IF OBJECT_ID('bronze.customers', 'U') IS NOT NULL
 GO
     
 CREATE TABLE bronze.customers (
-    customer_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    customer_id INT NOT NULL PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL,
@@ -27,7 +27,7 @@ IF OBJECT_ID('bronze.addresses', 'U') IS NOT NULL
 GO
 
 CREATE TABLE bronze.addresses (
-    address_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    address_id INT NOT NULL PRIMARY KEY,
     country VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
     street VARCHAR(255) NOT NULL,
@@ -45,7 +45,7 @@ IF OBJECT_ID('bronze.brands', 'U') IS NOT NULL
 GO
 
 CREATE TABLE bronze.brands (
-    brand_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    brand_id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     created_at DATETIME2 NULL,
     updated_at DATETIME2 NULL,
@@ -60,7 +60,7 @@ IF OBJECT_ID('bronze.categories', 'U') IS NOT NULL
 GO
     
 CREATE TABLE bronze.categories (
-    category_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    category_id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     parent_category_id INT NULL,
     created_at DATETIME2 NULL,
@@ -76,7 +76,7 @@ IF OBJECT_ID('bronze.products', 'U') IS NOT NULL
 GO
     
 CREATE TABLE bronze.products (
-    product_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    product_id INT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(1000) NULL,
     category_id INT NULL,
@@ -95,7 +95,7 @@ IF OBJECT_ID('bronze.payment_methods', 'U') IS NOT NULL
 GO
 
 CREATE TABLE bronze.payment_methods (
-    payment_method_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    payment_method_id INT NOT NULL PRIMARY KEY,
     payment_method_name VARCHAR(100) NOT NULL,
     is_active BIT NOT NULL DEFAULT 1,
     created_at DATETIME2 NULL,
@@ -111,7 +111,7 @@ IF OBJECT_ID('bronze.orders', 'U') IS NOT NULL
 GO
 
 CREATE TABLE bronze.orders (
-    order_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    order_id INT NOT NULL PRIMARY KEY,
     customer_id INT NOT NULL,
     order_date DATETIME2 NOT NULL,
     payment_method_id INT NULL,
@@ -135,7 +135,7 @@ IF OBJECT_ID('bronze.order_items', 'U') IS NOT NULL
 GO
 
 CREATE TABLE bronze.order_items (
-    order_item_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    order_item_id INT NOT NULL PRIMARY KEY,
     order_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
@@ -155,7 +155,7 @@ IF OBJECT_ID('bronze.order_item_returns', 'U') IS NOT NULL
 GO
 
 CREATE TABLE bronze.order_item_returns (
-    return_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    return_id INT NOT NULL PRIMARY KEY,
     order_item_id INT NOT NULL,
     return_date DATETIME2 NOT NULL,
     quantity_returned INT NOT NULL,
@@ -174,7 +174,7 @@ IF OBJECT_ID('bronze.website_sessions', 'U') IS NOT NULL
 GO
 
 CREATE TABLE bronze.website_sessions (
-    website_session_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    website_session_id INT NOT NULL PRIMARY KEY,
     created_at DATETIME2 NOT NULL,
     user_id INT NULL,
     is_repeat_session BIT NULL,
@@ -194,7 +194,7 @@ IF OBJECT_ID('bronze.pageviews', 'U') IS NOT NULL
 GO
 
 CREATE TABLE bronze.pageviews (
-    website_pageview_id INT NOT NULL PRIMARY KEY NONCLUSTERED,
+    website_pageview_id INT NOT NULL PRIMARY KEY,
     created_at DATETIME2 NOT NULL,
     website_session_id INT NOT NULL,
     pageview_url VARCHAR(255) NULL,
