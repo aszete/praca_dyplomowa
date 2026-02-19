@@ -5,8 +5,6 @@ AS
 BEGIN
     SET NOCOUNT ON;
     
-    -- 1. Initialize Batch IDs
-    -- Ensures we never pass a NULL to the worker procedures
     SET @silver_batch_id = ISNULL(@silver_batch_id, 'SILVER_' + FORMAT(SYSDATETIME(), 'yyyyMMdd_HHmmss'));
     
     IF @source_batch_id IS NULL
@@ -16,7 +14,7 @@ BEGIN
         WHERE status = 'Success' 
         ORDER BY load_end_time DESC;
         
-        -- Fallback if bronze.metadata is empty or has no 'Success' records
+        -- Fallback
         SET @source_batch_id = ISNULL(@source_batch_id, 'INITIAL_LOAD');
     END
 
@@ -26,7 +24,7 @@ BEGIN
     PRINT '================================================';
 
     -- 2. WYMIARY
-    PRINT '>> Ladowanie wymiarow...';
+    PRINT '>> Ladowanie tabeli wymiarów...';
     BEGIN TRY EXEC silver.load_addresses @silver_batch_id, @source_batch_id; PRINT 'OK Addresses'; END TRY 
     BEGIN CATCH PRINT 'NIEUDANE: Addresses'; END CATCH
 
@@ -46,7 +44,7 @@ BEGIN
     BEGIN CATCH PRINT 'NIEUDANE: Products'; END CATCH
 
     -- 3. FAKTY
-    PRINT '>> Ladowanie faktow...';
+    PRINT '>> Ladowanie tabeli faktow...';
     BEGIN TRY EXEC silver.load_website_sessions @silver_batch_id, @source_batch_id; PRINT 'OK Sessions'; END TRY 
     BEGIN CATCH PRINT 'NIEUDANE: Sessions'; END CATCH
 
@@ -66,7 +64,7 @@ BEGIN
     PRINT 'SILVER LOAD COMPLETE';
     PRINT '================================================';
 
-    -- 4. Final Summary Report
+    -- 4. Podsumowanie
     SELECT 
         table_name, 
         status, 
