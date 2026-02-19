@@ -217,22 +217,3 @@ CREATE TABLE bronze.metadata (
     comments VARCHAR(255) NULL,
     created_at DATETIME2 NOT NULL DEFAULT GETDATE()
 );
-
-
----------------------------------------------------------------------    NOTES    -------------------------------------------------------------------------------
-
--- IDENTITY(1,1)
-
--- **What it does:** Auto-incrementing number generator, used for surrogate keys, audit/log tables
-
--- - **First 1**: Start counting from 1
--- - **Second 1**: Increment by 1 each time
-
--- **Example:**
--- ```
--- Row 1: metadata_id = 1 (automatic)
--- Row 2: metadata_id = 2 (automatic)
--- Row 3: metadata_id = 3 (automatic)
-
-
-
