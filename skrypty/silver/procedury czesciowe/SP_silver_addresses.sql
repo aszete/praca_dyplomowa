@@ -20,7 +20,7 @@ BEGIN
                 TRIM(country) AS country,
                 UPPER(LEFT(TRIM(city), 1)) + LOWER(SUBSTRING(TRIM(city), 2, LEN(TRIM(city)))) AS city,
                 CASE 
-                    WHEN street IS NULL OR TRIM(street) = '' THEN 'UNKNOWN'
+                    WHEN street IS NULL OR TRIM(street) = '' THEN 'N/A'
                     ELSE TRIM('ul. ' + UPPER(LEFT(LTRIM(REPLACE(TRIM(street), 'ul.', '')), 1)) + 
                          LOWER(SUBSTRING(LTRIM(REPLACE(TRIM(street), 'ul.', '')), 2, LEN(street))))
                 END AS street,
