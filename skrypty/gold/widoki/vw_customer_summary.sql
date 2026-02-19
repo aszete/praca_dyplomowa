@@ -1,4 +1,4 @@
-CREATE OR ALTER VIEW gold.vw_customer_summary AS
+CREATE OR ALTER VIEW vw_customer_summary AS
 WITH customer_sessions AS (
     SELECT 
         fs.customer_key,
