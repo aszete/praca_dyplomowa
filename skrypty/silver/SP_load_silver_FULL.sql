@@ -21,46 +21,46 @@ BEGIN
     END
 
     PRINT '================================================';
-    PRINT 'STARTING SILVER LOAD BATCH: ' + @silver_batch_id;
-    PRINT 'SOURCE BATCH IDENTIFIED:    ' + @source_batch_id;
+    PRINT 'START LADOWANIA SILVER BATCH: ' + @silver_batch_id;
+    PRINT 'ZRODLO BATCH:    ' + @source_batch_id;
     PRINT '================================================';
 
-    -- 2. DIMENSIONS (Order matters if you have FK constraints)
-    PRINT '>> Loading Dimensions...';
-    BEGIN TRY EXEC silver.load_addresses @silver_batch_id, @source_batch_id; PRINT '   [OK] Addresses'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Addresses'; END CATCH
+    -- 2. WYMIARY
+    PRINT '>> Ladowanie wymiarow...';
+    BEGIN TRY EXEC silver.load_addresses @silver_batch_id, @source_batch_id; PRINT 'OK Addresses'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Addresses'; END CATCH
 
-    BEGIN TRY EXEC silver.load_brands @silver_batch_id, @source_batch_id; PRINT '   [OK] Brands'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Brands'; END CATCH
+    BEGIN TRY EXEC silver.load_brands @silver_batch_id, @source_batch_id; PRINT 'OK Brands'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Brands'; END CATCH
 
-    BEGIN TRY EXEC silver.load_categories @silver_batch_id, @source_batch_id; PRINT '   [OK] Categories'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Categories'; END CATCH
+    BEGIN TRY EXEC silver.load_categories @silver_batch_id, @source_batch_id; PRINT 'OK Categories'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Categories'; END CATCH
 
-    BEGIN TRY EXEC silver.load_customers @silver_batch_id, @source_batch_id; PRINT '   [OK] Customers'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Customers'; END CATCH
+    BEGIN TRY EXEC silver.load_customers @silver_batch_id, @source_batch_id; PRINT 'OK Customers'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Customers'; END CATCH
 
-    BEGIN TRY EXEC silver.load_payment_methods @silver_batch_id, @source_batch_id; PRINT '   [OK] Payment Methods'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Payment Methods'; END CATCH
+    BEGIN TRY EXEC silver.load_payment_methods @silver_batch_id, @source_batch_id; PRINT 'OK Payment Methods'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Payment Methods'; END CATCH
 
-    BEGIN TRY EXEC silver.load_products @silver_batch_id, @source_batch_id; PRINT '   [OK] Products'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Products'; END CATCH
+    BEGIN TRY EXEC silver.load_products @silver_batch_id, @source_batch_id; PRINT 'OK Products'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Products'; END CATCH
 
-    -- 3. FACTS (Load these after Dimensions)
-    PRINT '>> Loading Facts...';
-    BEGIN TRY EXEC silver.load_website_sessions @silver_batch_id, @source_batch_id; PRINT '   [OK] Sessions'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Sessions'; END CATCH
+    -- 3. FAKTY
+    PRINT '>> Ladowanie faktow...';
+    BEGIN TRY EXEC silver.load_website_sessions @silver_batch_id, @source_batch_id; PRINT 'OK Sessions'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Sessions'; END CATCH
 
-    BEGIN TRY EXEC silver.load_pageviews @silver_batch_id, @source_batch_id; PRINT '   [OK] Pageviews'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Pageviews'; END CATCH
+    BEGIN TRY EXEC silver.load_pageviews @silver_batch_id, @source_batch_id; PRINT 'OK Pageviews'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Pageviews'; END CATCH
 
-    BEGIN TRY EXEC silver.load_orders @silver_batch_id, @source_batch_id; PRINT '   [OK] Orders'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Orders'; END CATCH
+    BEGIN TRY EXEC silver.load_orders @silver_batch_id, @source_batch_id; PRINT 'OK Orders'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Orders'; END CATCH
 
-    BEGIN TRY EXEC silver.load_order_items @silver_batch_id, @source_batch_id; PRINT '   [OK] Order Items'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Order Items'; END CATCH
+    BEGIN TRY EXEC silver.load_order_items @silver_batch_id, @source_batch_id; PRINT 'OK Order Items'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Order Items'; END CATCH
 
-    BEGIN TRY EXEC silver.load_order_item_returns @silver_batch_id, @source_batch_id; PRINT '   [OK] Returns'; END TRY 
-    BEGIN CATCH PRINT 'FAILED: Returns'; END CATCH
+    BEGIN TRY EXEC silver.load_order_item_returns @silver_batch_id, @source_batch_id; PRINT 'OK Returns'; END TRY 
+    BEGIN CATCH PRINT 'NIEUDANE: Returns'; END CATCH
 
     PRINT '================================================';
     PRINT 'SILVER LOAD COMPLETE';
