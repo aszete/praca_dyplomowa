@@ -23,14 +23,12 @@ SELECT
     dc.email,
     dc.country,
     dc.age_group,
-    
-    -- Journey
+
+    -- konwersje
     cs.total_sessions,
     MAX(CASE WHEN cs.session_number = 1 THEN cs.utm_campaign END) AS first_campaign,
     MAX(CASE WHEN cs.session_number = 1 THEN cs.device_type END) AS first_device,
     MAX(CASE WHEN cs.resulted_in_sale = 1 THEN cs.utm_campaign END) AS converting_campaign,
-    
-    -- Konwersja
     SUM(CASE WHEN cs.resulted_in_sale = 1 THEN 1 ELSE 0 END) AS sessions_with_purchase,
     MIN(CASE WHEN cs.resulted_in_sale = 1 THEN cs.session_number END) AS first_purchase_session,
     
