@@ -1,3 +1,33 @@
+/*
+===============================================================================
+Procedura składowana: Ładowanie warstwy Silver - procedura nadrzędna
+===============================================================================
+Cel:
+Procedura automatyzuje ładowanie danych z plików źródłowych OLTP 
+(pliki CSV) do warstwy Bronze. Dodatkowo rejestruje metryki łądowania w
+tabeli metadata.
+
+Procedura implementuje początkowy etap pobierania Medallion Architektura:
+Źródło OLTP → Bronze (surowy) → Silver (oczyszczony) → Gold (wymiarowy)
+
+Parametry:
+@batch_id VARCHAR(50) — opcjonalny identyfikator partii.
+                        Jeśli wartość jest równa NULL, generowany jest
+                        unikalny identyfikator na podstawie bieżącego
+                        znacznika czasu systemu.
+
+Sposób użycia:
+-- Ładowanie wszystkich tabel z automatycznie wygenerowanym identyfikatorem:
+
+EXEC silver.load_full;
+
+-- Ładowanie wybranych tabele z określonym identyfikatorem:
+
+EXEC silver.load_full @batch_id = 'BATCH_2024_001';
+===============================================================================
+*/
+
+
 CREATE OR ALTER PROCEDURE silver.load_full
     @silver_batch_id VARCHAR(50) = NULL,
     @source_batch_id VARCHAR(50) = NULL
