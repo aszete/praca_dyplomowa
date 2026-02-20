@@ -1,11 +1,13 @@
-# Praca dyplomowa
+** Praca dyplomowa **
 
-Repozytorium pracy dyplomowej na kierunku **Big Data. Data Engineering**
+Repozytorium zawiera projekt hurtowni danych zrealizowany w ramach pracy dyplomowej na kierunku Big Data. Data Engineering.
 
-**Tytuł pracy:** „Budowa hurtowni danych w środowisku Microsoft SQL Server z wykorzystaniem architektury medalion na przykładzie sklepu e-commerce”
+Informacje o pracy
 
-**Autor:** Joanna Szeterlak
+*Tytuł pracy:*
+„Budowa hurtowni danych w środowisku Microsoft SQL Server z wykorzystaniem architektury medalion na przykładzie sklepu e-commerce”
 
+Autor: Joanna Szeterlak
 
 ## 📂 Struktura repozytorium
 ```
@@ -23,6 +25,25 @@ Praca_dyplomoes/
     └── Gold                            # Kod DDL oraz procedury składowane
         └── procedury czesciowe         # Procedury dla poszczególnych tabel w warstwie Gold
         └── widoki                      # Utworzone widoki analityczne
-
 ```
 
+🎯 **Cel projektu**
+
+Celem projektu było zaprojektowanie i implementacja hurtowni danych w środowisku Microsoft SQL Server z wykorzystaniem architektury warstwowej typu Medallion (Bronze → Silver → Gold).
+
+Projekt obejmuje:
+
+→ implementację procesów ETL w T-SQL,
+→ budowę modelu gwiazdy (star schema) w warstwie analitycznej,
+→ zastosowanie mechanizmów kontroli jakości danych,
+→ przygotowanie widoków analitycznych przeznaczonych do raportowania (np. Power BI).
+
+🧱 **Architektura rozwiązania**
+
+Projekt oparty jest na trójwarstwowej architekturze:
+
+Bronze – warstwa danych surowych (ładowanie plików CSV)
+Silver – warstwa transformacji i oczyszczania danych
+Gold – warstwa analityczna (model gwiazdy + widoki)
+
+Diagramy architektury znajdują się w katalogu Docs/.
