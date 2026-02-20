@@ -11,9 +11,9 @@ Repozytorium pracy dyplomowej na kierunku **Big Data. Data Engineering**
 ```
 Praca_dyplomoes/
 │
-├── Dane/                               # Pliki .csv z surowymi danymi syntetycznymi użytymi w pracy
+├── Dane/                               # Pliki .csv z surowymi danymi syntetycznymi użytymi w projekcie
 │
-├── Docs/                               # Dodatkowe dokumenty, diagramy użyte w pracy
+├── Docs/                               # Diagramy użyte w projekcie
 │
 └── Skrypty/                            # Wszystkie skrypty T-SQL użyte w implementacji hurtowni danych
     |
