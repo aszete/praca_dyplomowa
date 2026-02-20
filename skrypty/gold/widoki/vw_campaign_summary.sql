@@ -1,6 +1,6 @@
 -- Widok z podsumowaniem kampanii reklamowych według miesięcy
 
-CREATE OR ALTER VIEW gold.vw_campaign_summary AS
+CREATE OR ALTER VIEW vw_campaign_summary AS
 SELECT 
     w.utm_campaign,
     dd.year,
@@ -13,7 +13,6 @@ SELECT
 FROM gold.fact_sessions fs
 JOIN gold.dim_date dd ON fs.start_date_key = dd.date_key
 JOIN (
-    -- Get distinct session + campaign to avoid M:M duplication
     SELECT DISTINCT session_key, utm_campaign
     FROM gold.fact_web_analytics
     WHERE utm_campaign IS NOT NULL
